@@ -1,3 +1,7 @@
 spring:
   application:
     name: bank-demo
+  datasource:
+    url: jdbc:mysql://localhost:3307/bank_db
+    username: root
+    password: mysql
