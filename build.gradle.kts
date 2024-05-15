@@ -31,7 +31,12 @@ dependencies {
     implementation("org.flywaydb:flyway-mysql:$flyway_version")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openapi_version")
     runtimeOnly("com.mysql:mysql-connector-j:$mysql_connector_version")
+
+    // spring boot test
     testImplementation("org.springframework.boot:spring-boot-starter-test:$spring_boot_version")
+    // testcontainers
+    testImplementation("org.testcontainers:junit-jupiter:1.19.8")
+    testImplementation("org.testcontainers:mysql:1.19.8")
 }
 
 tasks.withType<Test> {

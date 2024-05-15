@@ -47,7 +47,7 @@ class UserRepository(
 
     companion object {
         /**
-         * This maps a database row to a [User] object
+         * This converts a database row to a [User] object
          */
         val userRowMapper = RowMapper { resultSet, _ ->
             User(
