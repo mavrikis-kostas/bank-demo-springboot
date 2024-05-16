@@ -69,12 +69,19 @@ class UserControllerTest {
      */
     @Test
     fun `GET users by id should return the correct user`() {
-        // TODO: Implement the test
-        //  Hint: Create a User object with the expected values
-        //        Mock the getUserById() method to return the expected User object
-        //        Use the mockMvc.get() method to call the /users/{id} endpoint
-        //        Use the content().json() method to assert that the response is correct
-    }
+        val expectedUser = User(
+            id = 1,
+            name = "Alice",
+            balance = BigDecimal("1000.00"),
+            updatedAt = "2024-01-01T00:00:00Z"
+        )
+
+        every { userRepository.getUserById(1) } returns expectedUser
+
+        val expectedUserJson = objectMapper.writeValueAsString(expectedUser)
+        mockMvc.get("/users/1")
+            .andExpect { status().isOk }
+            .andExpect { content().json(expectedUserJson) }    }
 
     companion object {
         // This converts Kotlin objects to JSON
