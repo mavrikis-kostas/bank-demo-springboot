@@ -66,18 +66,24 @@ class UserRepositoryTest : TestContainerConfiguration() {
      */
     @Test
     fun `getUserById should return the user with the given id`() {
-        // TODO: Implement the test
-        //  Hints: Use the userRepository.getUserById() method
-        //         Create a User object with the expected values
-        //         Use the assertThat() method to verify the result
+        val actualUser = userRepository.getUserById(1)
+        val expectedUser = User(
+            id = 1,
+            name = "Superman",
+            balance = BigDecimal("1000.00"),
+            updatedAt = "2024-03-01 00:00:00"
+        )
+
+        assertThat(actualUser).isEqualTo(expectedUser)
     }
 
     @Test
     fun `insertUser should insert a new user into the database`() {
-        // TODO: Implement the test
-        //  Hints: Use the userRepository.insertUser() method
-        //         Use the userRepository.getUsers() method to get the list of users
-        //         Use the assertThat() and anyMatch() methods to verify that the user was inserted
+        val name = "Superwoman"
+        userRepository.insertUser(name)
+
+        val actualUsers = userRepository.getUsers()
+        assertThat(actualUsers).anyMatch { it.name == name && it.balance == BigDecimal("0.00") }
     }
 
     @Test
@@ -93,9 +99,10 @@ class UserRepositoryTest : TestContainerConfiguration() {
 
     @Test
     fun deleteUser() {
-        // TODO: Implement the test
-        //  Hints: Use the userRepository.deleteUser() method
-        //         Use the userRepository.getUserById() method to check if the user was deleted
-        //         Use the assertThat() method to verify the result
+        val id = 1
+        userRepository.deleteUser(id)
+
+        val actualUser = userRepository.getUserById(id)
+        assertThat(actualUser).isNull()
     }
 }
