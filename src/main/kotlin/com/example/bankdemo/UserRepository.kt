@@ -13,8 +13,10 @@ class UserRepository(
     private val jdbcTemplate: NamedParameterJdbcTemplate,
 ) {
     fun getUsers(): List<User> {
-        TODO("Not yet implemented")
-        // Hint: Use the jdbcTemplate.query() method to get all users from the database
+        val query = "SELECT * FROM user"
+
+        // The jdbcTemplate.query() method returns a list of results
+        return jdbcTemplate.query(query, userRowMapper)
     }
 
     fun getUserById(id: Int): User? {
@@ -27,8 +29,12 @@ class UserRepository(
     }
 
     fun insertUser(name: String) {
-        TODO("Not yet implemented")
-        // Hint: Use the jdbcTemplate.update() method to insert a new user into the database
+        val query = "INSERT INTO user(name) VALUES (:name)"
+        val parameters = mapOf("name" to name)
+
+        // The jdbcTemplate.update() method returns the number of updated rows
+        // If it returns 1, it means that one row was inserted
+        jdbcTemplate.update(query, parameters)
     }
 
     fun updateUser(id: Int, name: String, balance: BigDecimal): Boolean {
@@ -41,8 +47,12 @@ class UserRepository(
     }
 
     fun deleteUser(id: Int): Boolean {
-        TODO("Not yet implemented")
-        // Hint: Use the jdbcTemplate.update() method to delete a user from the database
+        val query = "DELETE FROM user WHERE id = :id"
+        val parameters = mapOf("id" to id)
+
+        // The jdbcTemplate.update() method returns the number of updated rows
+        // If it returns 0, it means that no rows were deleted
+        return jdbcTemplate.update(query, parameters) > 0
     }
 
     companion object {
